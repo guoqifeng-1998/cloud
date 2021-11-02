@@ -1,0 +1,6 @@
+xg\ConsumerApp.class
+xg\controller\ConsumerCtl_Feign.class
+xg\config\ConfigBean.class
+xg\controller\DeptCtrlConsumer.class
+xg\config\ReThreeRule.class
+xg\service\DeptClientService.class

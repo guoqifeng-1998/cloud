@@ -1,0 +1,9 @@
+server:
+  port: 80
+spring:
+  application:
+    name: consumer-dept
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848

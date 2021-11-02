@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+</head>
+<body>
+    <div id="d">
+        <input name="username" v-model='name'><br>
+        <button  @click="f">登录</button>
+    </div>
+    <script>
+        new Vue({
+            el:"#d",
+            data:{
+                name:""
+            },
+            methods:{
+                f:function () {
+                    axios.get('http://localhost/login',{
+                        params:{
+                            username:this.name
+                        }
+                    }).then(ret=> {
+                        location.href='http://localhost/main.html'
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

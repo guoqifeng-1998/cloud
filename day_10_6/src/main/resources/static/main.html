@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+</head>
+<body>
+<div id="d">
+    <h1>欢迎你：{{name}}</h1>
+</div>
+<script>
+    new Vue({
+        el:"#d",
+        data:{
+            name:""
+        },
+        mounted: function(){
+            axios.get(
+                '/getuserName'
+            ).then(rs => {
+                if(rs.data){
+                    this.name=rs.data;
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

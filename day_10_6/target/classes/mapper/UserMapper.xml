@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xg.dao.UserDao">
+    <resultMap id="um" type="userManager">
+        <id column="uid" property="id"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <association property="o" javaType="orga">
+            <result column="oname" property="name"/>
+            <result column="location" property="location"/>
+        </association>
+        <!--<result column="oname" property="o.name"/>-->
+        <!--<result column="location" property="o.location"/>-->
+        <collection property="roles" ofType="role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="re" property="ext"/>
+            <collection property="perms" ofType="perm">
+                <id column="tid" property="id"/>
+                <result column="tname" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="selectUser" resultMap="um">
+        SELECT u.id uid,username,phone,
+            o.name oname,location,
+            ur.roleid rid,r.name rname,r.ext re,
+            tp.id tid,tp.name tname
+        from t_user u LEFT JOIN organize o on u.orga_id=o.id
+        LEFT JOIN t_user_role ur ON u.id=ur.userid
+        LEFT JOIN t_role r on r.id=ur.roleid
+        LEFT JOIN t_role_perms trp on r.id=trp.role_id
+        LEFT JOIN t_perms tp on tp.id=trp.perm_id
+        where username=#{username} and password=#{password}
+    </select>
+
+    <insert id="insertRole" keyProperty="id" useGeneratedKeys="true" >
+        insert into t_role (name,ext) VALUES (#{name},#{ext})
+    </insert>
+    <insert id="insertPermsForRole" >
+
+        INSERT  into t_role_perms (role_id, perm_id) VALUES (#{roleid},#{permid})
+    </insert>
+</mapper>
